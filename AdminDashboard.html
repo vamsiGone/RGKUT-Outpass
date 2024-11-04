@@ -23,7 +23,7 @@
 	<link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/dataTables.bootstrap4.min.css" />
 	<link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/responsive.bootstrap4.min.css" />
 	<link rel="stylesheet" type="text/css" href="vendors/styles/style.css" />
-
+	<link rel="stylesheet" type="text/css" href="src/plugins/sweetalert2/sweetalert2.css" />
 </head>
 
 <body>
@@ -225,8 +225,7 @@
 	<div class="left-side-bar">
 		<div class="brand-logo">
 			<a href="index.html">
-				<img src="vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
-				<img src="vendors/images/deskapp-logo-white.svg" alt="" class="light-logo" />
+				<img src="vendors/images/rgukt-logo.png" alt="" /><b>RGUKT</b>
 			</a>
 			<div class="close-sidebar" data-toggle="left-sidebar-close">
 				<i class="ion-close-round"></i>
@@ -395,7 +394,7 @@
 					<h4 class="text-blue h4">Pending Requests</h4>
 				</div>
 				<div class="pb-20">
-					<table class="table hover multiple-select-row data-table-export nowrap">
+					<table class="table hover data-table-export nowrap">
 						<thead>
 							<tr>
 								<th>Student Id</th>
@@ -404,7 +403,7 @@
 								<th>Leaving Date & Time</th>
 								<th>Return Date & Time</th>
 								<th>Reason</th>
-								<th>Approval Status</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -415,7 +414,11 @@
 								<td>10:00 AM</td>
 								<td>12:00 PM</td>
 								<td>Doctor's Appointment</td>
-								<td>Approved</td>
+								<td>
+									<div class="table-actions">
+										<a href="#" data-color="#265ed7"><i class="icon-copy dw dw-mail"></i></a>
+									</div>
+								</td>
 							</tr>
 							<tr>
 								<td>1002</td>
@@ -424,7 +427,11 @@
 								<td>09:30 AM</td>
 								<td>11:45 AM</td>
 								<td>Family Emergency</td>
-								<td>Pending</td>
+								<td>
+									<div class="table-actions">
+										<a href="#" data-color="#265ed7"><i class="icon-copy dw dw-mail"></i></a>
+									</div>
+								</td>
 							</tr>
 							<tr>
 								<td>1003</td>
@@ -433,7 +440,11 @@
 								<td>11:00 AM</td>
 								<td>01:00 PM</td>
 								<td>Personal Errand</td>
-								<td>Rejected</td>
+								<td>
+									<div class="table-actions">
+										<a href="#" data-color="#265ed7"><i class="icon-copy dw dw-mail"></i></a>
+									</div>
+								</td>
 							</tr>
 							<tr>
 								<td>1004</td>
@@ -442,7 +453,11 @@
 								<td>08:15 AM</td>
 								<td>10:45 AM</td>
 								<td>Workshop</td>
-								<td>Approved</td>
+								<td>
+									<div class="table-actions">
+										<a href="#" data-color="#265ed7"><i class="icon-copy dw dw-mail"></i></a>
+									</div>
+								</td>
 							</tr>
 
 						</tbody>
@@ -475,6 +490,8 @@
 	<script src="src/plugins/datatables/js/vfs_fonts.js"></script>
 	<!-- Datatable Setting js -->
 	<script src="vendors/scripts/datatable-setting.js"></script>
+	<script src="src/plugins/sweetalert2/sweetalert2.all.js"></script>
+	<script src="src/plugins/sweetalert2/sweet-alert.init.js"></script>
 </body>
 
 </html>

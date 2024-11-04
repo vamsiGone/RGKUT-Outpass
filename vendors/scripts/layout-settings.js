@@ -106,7 +106,7 @@
 			jQuery(this).addClass("active");
 			sidebar_light.removeClass("active");
 			body.removeClass("sidebar-light").addClass("sidebar-dark");
-
+			$('.brand-logo a').css('color', 'white');
 			//Store in local storage
 			setOptions("navigationBackground", "sidebar-dark");
 		});

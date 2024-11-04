@@ -34,8 +34,8 @@ jQuery(document).ready(function () {
 					title: "Barber",
 					description:
 						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2024-10-05",
-					end: "2024-10-05",
+					start: "2024-11-05",
+					end: "2024-11-05",
 					className: "fc-bg-default",
 					icon: "circle",
 				},
@@ -43,8 +43,8 @@ jQuery(document).ready(function () {
 					title: "Flight Paris",
 					description:
 						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-08-08T14:00:00",
-					end: "2022-08-08T20:00:00",
+						start: "2024-11-05",
+						end: "2024-11-05",
 					className: "fc-bg-deepskyblue",
 					icon: "cog",
 					allDay: false,
@@ -53,8 +53,8 @@ jQuery(document).ready(function () {
 					title: "Team Meeting",
 					description:
 						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-07-10T13:00:00",
-					end: "2022-07-10T16:00:00",
+						start: "2024-11-15",
+						end: "2024-11-15",
 					className: "fc-bg-pinkred",
 					icon: "group",
 					allDay: false,
@@ -63,7 +63,8 @@ jQuery(document).ready(function () {
 					title: "Meeting",
 					description:
 						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-08-12",
+						start: "2024-11-25",
+						end: "2024-11-25",
 					className: "fc-bg-lightgreen",
 					icon: "suitcase",
 				},

@@ -4,7 +4,7 @@
 <head>
     <!-- Basic Page Info -->
     <meta charset="utf-8" />
-    <title>Requests History</title>
+    <title>Student Info</title>
 
     <!-- Site favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="vendors/images/apple-touch-icon.png" />
@@ -225,8 +225,7 @@
     <div class="left-side-bar">
         <div class="brand-logo">
             <a href="index.html">
-                <img src="vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
-                <img src="vendors/images/deskapp-logo-white.svg" alt="" class="light-logo" />
+                <img src="vendors/images/rgukt-logo.png" alt="" /><b>RGUKT</b>
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">
                 <i class="ion-close-round"></i>
@@ -284,6 +283,7 @@
                                 <th>Email Address</th>
                                 <th>Branch</th>
                                 <th>Stream</th>
+                                <th>Action</th>
                                 <th>Parent / Guardian Email Address</th>
                                 <th>Parent / Guardian Contact Number</th>
                             </tr>
@@ -296,6 +296,12 @@
                                 <td>john.doe@example.com</td>
                                 <td>Computer Science</td>
                                 <td>Engineering</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="#" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
+                                        <a href="#" data-color="#e95959"><i class="icon-copy dw dw-delete-3"></i></a>
+                                    </div>
+                                </td>
                                 <td>parent.doe@example.com</td>
                                 <td>+1 555-123-4567</td>
                             </tr>
@@ -306,6 +312,12 @@
                                 <td>jane.smith@example.com</td>
                                 <td>Business Management</td>
                                 <td>Commerce</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="#" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
+                                        <a href="#" data-color="#e95959"><i class="icon-copy dw dw-delete-3"></i></a>
+                                    </div>
+                                </td>
                                 <td>parent.smith@example.com</td>
                                 <td>+1 555-987-6543</td>
                             </tr>
@@ -316,6 +328,12 @@
                                 <td>mike.johnson@example.com</td>
                                 <td>History</td>
                                 <td>Arts</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="#" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
+                                        <a href="#" data-color="#e95959"><i class="icon-copy dw dw-delete-3"></i></a>
+                                    </div>
+                                </td>
                                 <td>parent.johnson@example.com</td>
                                 <td>+1 555-654-3210</td>
                             </tr>
@@ -326,6 +344,12 @@
                                 <td>emily.brown@example.com</td>
                                 <td>Mechanical Engineering</td>
                                 <td>Engineering</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="#" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
+                                        <a href="#" data-color="#e95959"><i class="icon-copy dw dw-delete-3"></i></a>
+                                    </div>
+                                </td>
                                 <td>parent.brown@example.com</td>
                                 <td>+1 555-432-1098</td>
                             </tr>
@@ -357,6 +381,14 @@
     <script src="src/plugins/datatables/js/vfs_fonts.js"></script>
     <!-- Datatable Setting js -->
     <script src="vendors/scripts/datatable-setting.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dw-edit2').on('click', function (event) {
+                location.href="register.html";
+            });
+            
+        });
+    </script>
 </body>
 
 </html>
