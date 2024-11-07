@@ -27,7 +27,7 @@
 	<div class="login-header box-shadow">
 		<div class="container-fluid d-flex justify-content-between align-items-center">
 			<div class="brand-logo">
-				<a href="index.html">
+				<a href="#">
 					<img src="vendors/images/rgukt-logo.png" alt="" /><b>RGUKT</b>
 				</a>
 
@@ -43,14 +43,11 @@
 				</div>
 				<div class="col-md-6 col-lg-5">
 					<div class="login-box bg-white box-shadow border-radius-10">
-						<!-- <div class="login-title">
-							<h2 class="text-center text-primary">RGUKT</h2>
-						</div> -->
-						<form>
+						<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
 							<div class="select-role">
 								<div class="btn-group btn-group-toggle" data-toggle="buttons">
 									<label class="btn active">
-										<input type="radio" name="options" id="admin" />
+										<input type="radio" name="role" value="Staff" />
 										<div class="icon">
 											<img src="vendors/images/briefcase.svg" class="svg" alt="" />
 										</div>
@@ -58,7 +55,7 @@
 										Staff
 									</label>
 									<label class="btn">
-										<input type="radio" name="options" id="user" />
+										<input type="radio" name="role" value="student" />
 										<div class="icon">
 											<img src="vendors/images/person.svg" class="svg" alt="" />
 										</div>
@@ -67,14 +64,17 @@
 									</label>
 								</div>
 							</div>
+
 							<div class="input-group custom">
-								<input type="text" class="form-control form-control-lg" placeholder="Username" />
+								<input type="text" name="email" class="form-control form-control-lg"
+									placeholder="email" />
 								<div class="input-group-append custom">
 									<span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
 								</div>
 							</div>
 							<div class="input-group custom">
-								<input type="password" class="form-control form-control-lg" placeholder="**********" />
+								<input type="password" name="password" class="form-control form-control-lg"
+									placeholder="**********" />
 								<div class="input-group-append custom">
 									<span class="input-group-text"><i class="dw dw-padlock1"></i></span>
 								</div>
@@ -95,11 +95,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="input-group mb-0">
-										<!--
-											use code for form submit
-											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
-										-->
-										<a class="btn btn-primary btn-lg btn-block" href="index.html">Sign In</a>
+										<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
 									</div>
 								</div>
 							</div>
@@ -115,16 +111,48 @@
 	<script src="vendors/scripts/script.min.js"></script>
 	<script src="vendors/scripts/process.js"></script>
 	<script src="vendors/scripts/layout-settings.js"></script>
+	<script src="src/plugins/jQuery-Validation/jquery-validation.min.js"></script>
 
 	<script>
 		$(document).ready(function () {
 
-			$('#admin').on('click', function () {
-				window.location.href = 'AdminDashboard.html';
-			});
+			$("form").validate({
+				errorPlacement: function (error, element) {
 
-			$('#user').on('click', function () {
-				window.location.href = 'studentdashboard.html';
+					if (element.attr("name") === "role") {
+						error.insertBefore(".select-role");
+					} else {
+						error.insertBefore(element.closest('.input-group'));
+					}
+				},
+				rules: {
+					role: {
+						required: true
+					},
+					email: {
+						required: true,
+						email: true
+					},
+					password: {
+						required: true,
+						minlength: 6
+					}
+
+				},
+				messages: {
+					role: {
+						required: "Please select a role"
+					},
+					email: {
+						required: "Please enter your email",
+						email: "Enter a valid email address"
+					},
+					password: {
+						required: "Enter your password",
+						minlength: "Minimum length is 6"
+					}
+
+				}
 			});
 		});
 	</script>
