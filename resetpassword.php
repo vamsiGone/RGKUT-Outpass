@@ -1,3 +1,65 @@
+<?php include 'dbconnection.php'; ?>
+<?php
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get input values
+	$token = $_POST['token'];
+    $newPassword = trim($_POST['password']);
+    $confirmPassword = trim($_POST['repeat']);
+
+    // Check if passwords match
+    if ($newPassword === $confirmPassword) {
+		// Check if the token is valid
+        $stmt = $conn->prepare("SELECT UserID FROM PasswordReset WHERE Token = ? AND ExpiryTime > NOW()");
+        $stmt->bind_param('s', $token);
+        $stmt->execute();
+        $result = $stmt->get_result();
+		if ($result->num_rows > 0) {
+			$user = $result->fetch_assoc();
+            $userID = $user['UserID'];
+            
+            // Update password
+            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("UPDATE UserMaster SET Password = ?, IsFirstLogin = 0 WHERE UserID = ? and IsActive = 1");
+            $stmt->bind_param('si', $hashedPassword, $userID);
+            $stmt->execute();
+
+			// Delete the token
+            $stmt = $conn->prepare("DELETE FROM PasswordReset WHERE UserID = ?");
+            $stmt->bind_param('i', $userID);
+            $stmt->execute();
+			$stmt->close();
+			$conn->close();
+			echo "<script>
+    				document.addEventListener('DOMContentLoaded', function() {
+        				AlertMessage('success','Password updated successfully');
+        				setTimeout(function() {
+        				    window.location.href = 'logout.php';
+        				}, 10000); // 10000 milliseconds = 10 seconds
+    				});
+			</script>";
+			          
+		}else {
+			echo "<script>
+    				document.addEventListener('DOMContentLoaded', function() {
+        				AlertMessage('error', 'Invalid or expired token, try again.');
+        				setTimeout(function() {
+        				    window.location.href = 'forgotpassword.php';
+        				}, 10000); // 10000 milliseconds = 10 seconds
+    				});
+			</script>";
+		}
+        
+    } else {
+		echo "<script>document.addEventListener('DOMContentLoaded', function() {AlertMessage('error', 'Passwords do not match'); });</script>";
+    }
+}
+else if (isset($_GET['token'])) {
+    $token = $_GET['token'];
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -21,6 +83,7 @@
 	<link rel="stylesheet" type="text/css" href="vendors/styles/core.css" />
 	<link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css" />
 	<link rel="stylesheet" type="text/css" href="vendors/styles/style.css" />
+	<link rel="stylesheet" type="text/css" href="src/plugins/toastr/toastr.min.css" />
 
 </head>
 
@@ -47,6 +110,7 @@
 						</div>
 						<h6 class="mb-20">Enter your new password, confirm and submit</h6>
 						<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="POST">
+						<input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
 							<div class="input-group custom">
 								<input type="text" name="password" class="form-control form-control-lg"
 									placeholder="New Password" />
@@ -70,7 +134,7 @@
 								<div class="col-2"></div>
 								<div class="col-5">
 									<div class="input-group mb-0">
-										<a class="btn btn-danger btn-lg btn-block" href="index.html">Back</a>
+										<a class="btn btn-danger btn-lg btn-block" href="logout.php">Back</a>
 									</div>
 								</div>
 							</div>
@@ -87,6 +151,8 @@
 	<script src="vendors/scripts/process.js"></script>
 	<script src="vendors/scripts/layout-settings.js"></script>
 	<script src="src/plugins/jQuery-Validation/jquery-validation.min.js"></script>
+	<script src="src/plugins/toastr/toastr.min.js"></script>
+	<script src="vendors/scripts/toastr.js"></script>
 
 	<script>
 		$(document).ready(function () {

@@ -1,159 +1,77 @@
-jQuery(document).ready(function () {
-	jQuery("#add-event").submit(function () {
-		alert("Submitted");
-		var values = {};
-		$.each($("#add-event").serializeArray(), function (i, field) {
-			values[field.name] = field.value;
-		});
-		console.log(values);
-	});
-});
-
 (function () {
 	"use strict";
-	// ------------------------------------------------------- //
-	// Calendar
-	// ------------------------------------------------------ //
 	jQuery(function () {
-		// page is ready
-		jQuery("#calendar").fullCalendar({
+		// Initialize FullCalendar
+		const calendar = jQuery("#calendar").fullCalendar({
 			themeSystem: "bootstrap4",
-			// emphasizes business hours
 			businessHours: false,
 			defaultView: "month",
-			// event dragging & resizing
 			editable: true,
-			// header
 			header: {
 				left: "title",
 				center: "month,agendaWeek,agendaDay",
 				right: "today prev,next",
 			},
-			events: [
-				{
-					title: "Barber",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2024-11-05",
-					end: "2024-11-05",
-					className: "fc-bg-default",
-					icon: "circle",
-				},
-				{
-					title: "Flight Paris",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-						start: "2024-11-05",
-						end: "2024-11-05",
-					className: "fc-bg-deepskyblue",
-					icon: "cog",
-					allDay: false,
-				},
-				{
-					title: "Team Meeting",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-						start: "2024-11-15",
-						end: "2024-11-15",
-					className: "fc-bg-pinkred",
-					icon: "group",
-					allDay: false,
-				},
-				{
-					title: "Meeting",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-						start: "2024-11-25",
-						end: "2024-11-25",
-					className: "fc-bg-lightgreen",
-					icon: "suitcase",
-				},
-				{
-					title: "Conference",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-08-13",
-					end: "2022-08-15",
-					className: "fc-bg-blue",
-					icon: "calendar",
-				},
-				{
-					title: "Baby Shower",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-07-13",
-					end: "2022-07-14",
-					className: "fc-bg-default",
-					icon: "child",
-				},
-				{
-					title: "Birthday",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-09-13",
-					end: "2022-09-14",
-					className: "fc-bg-default",
-					icon: "birthday-cake",
-				},
-				{
-					title: "Restaurant",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-10-15T09:30:00",
-					end: "2022-10-15T11:45:00",
-					className: "fc-bg-default",
-					icon: "glass",
-					allDay: false,
-				},
-				{
-					title: "Dinner",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-11-15T20:00:00",
-					end: "2022-11-15T22:30:00",
-					className: "fc-bg-default",
-					icon: "cutlery",
-					allDay: false,
-				},
-				{
-					title: "Shooting",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-08-25",
-					end: "2022-08-25",
-					className: "fc-bg-blue",
-					icon: "camera",
-				},
-				{
-					title: "Go Space :)",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-12-27",
-					end: "2022-12-27",
-					className: "fc-bg-default",
-					icon: "rocket",
-				},
-				{
-					title: "Dentist",
-					description:
-						"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu pellentesque nibh. In nisl nulla, convallis ac nulla eget, pellentesque pellentesque magna.",
-					start: "2022-12-29T11:30:00",
-					end: "2022-12-29T012:30:00",
-					className: "fc-bg-blue",
-					icon: "medkit",
-					allDay: false,
-				},
-			],
-			dayClick: function () {
+			events: function (start, end, timezone, callback) {
+				// Fetch events dynamically from server
+				$.ajax({
+					url: "studentdashboard.php", // Replace with your PHP file that returns event data
+					type: "GET",
+					success: function (response) {
+						const data = JSON.parse(response);
+						if (data.success) {
+							callback(data.data); // Provide events to the calendar
+						} else {
+							AlertMessage('error', 'Failed to load events.');
+						}
+					},
+					error: function () {
+						AlertMessage('error', 'Error fetching events.');
+					}
+				});
+			},
+			dayClick: function (date, jsEvent, view) {
+				// Show modal to add event
 				jQuery("#modal-view-event-add").modal();
+				jQuery("#Save").off('click').on('click', function () {
+					// Collect form data
+					const postData = {
+						action: 'insert',
+						reason: jQuery("#reason").val(),
+						fromdate: date.format('YYYY-MM-DD HH:mm:ss'), // Use clicked date
+						returndate: jQuery("#returndate").val(),
+						description: jQuery("#description").val(),
+						ecolor: jQuery("#ecolor").val(),
+						eicon: jQuery("#eicon").val(),
+					};
+
+					$.ajax({
+						url: "studentdashboard.php", // Replace with your PHP file
+						type: "POST",
+						data: postData,
+						success: function (response) {
+							const data = JSON.parse(response);
+							if (data.success) {
+								AlertMessage('success', 'Request submitted successfully!');
+								jQuery("#modal-view-event-add").modal("hide");
+								jQuery("#calendar").fullCalendar("refetchEvents"); // Reload events
+							} else {
+								AlertMessage('error', data.message);
+							}
+						},
+						error: function () {
+							AlertMessage('error', 'Error adding event.');
+						}
+					});
+				});
 			},
 			eventClick: function (event, jsEvent, view) {
+				// Show event details in modal
 				jQuery(".event-icon").html("<i class='fa fa-" + event.icon + "'></i>");
 				jQuery(".event-title").html(event.title);
 				jQuery(".event-body").html(event.description);
-				jQuery(".eventUrl").attr("href", event.url);
 				jQuery("#modal-view-event").modal();
 			},
 		});
 	});
-})(jQuery);
+})();
